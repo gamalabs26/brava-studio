@@ -1,0 +1,268 @@
+/* ═══ BRAVA Studio — Tu hora. ═══ */
+
+:root{
+  /* Site Kit hooks */
+  --espresso: var(--gs-primary, #1E1A17);
+  --crema:    var(--gs-bg, #F6F1EA);
+  --terracota:var(--gs-accent, #C4553B);
+  --salvia:   var(--gs-secondary, #8A9B84);
+  --arena:    #D9CBB8;
+  --ink-dark: #221C17;
+  --ink-light:#F3EDE4;
+  --line-l:   rgba(243,237,228,.16);
+  --line-d:   rgba(34,28,23,.14);
+  --ease: cubic-bezier(.16,.8,.3,1);
+  --fx: var(--gs-fx-speed, 1);
+  --font-d: 'Zodiak', Georgia, serif;
+  --font-b: 'Switzer', 'Helvetica Neue', sans-serif;
+  --font-m: 'Fragment Mono', ui-monospace, monospace;
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--font-b);
+  font-weight:400;
+  color:var(--ink-light);
+  background:var(--espresso);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ── Cielo del amanecer (JS interpola --dawn-bg) ── */
+#dawn{
+  position:fixed;inset:0;z-index:-1;
+  background:var(--dawn-bg, var(--espresso));
+}
+/* grain sutil encima del cielo */
+#dawn::after{
+  content:"";position:absolute;inset:0;opacity:.05;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E");
+}
+
+.mono{font-family:var(--font-m);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
+.it{font-style:italic}
+.demo{font-style:normal;opacity:.45;letter-spacing:.08em}
+
+/* ── Nav ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.1rem clamp(1.2rem,4vw,3rem);
+  transition:background .4s var(--ease), box-shadow .4s var(--ease);
+}
+.nav.solid{background:rgba(30,26,23,.92);box-shadow:0 1px 0 var(--line-l)}
+body.day .nav.solid{background:rgba(246,241,234,.94);box-shadow:0 1px 0 var(--line-d);color:var(--ink-dark)}
+.wordmark{font-family:var(--font-d);font-weight:700;font-size:1.35rem;letter-spacing:.02em}
+.wordmark-dot{color:var(--terracota)}
+.nav-links{display:flex;gap:1.8rem;font-size:.85rem;font-weight:500}
+.nav-links a{opacity:.75;transition:opacity .3s}
+.nav-links a:hover{opacity:1}
+.pill{
+  font-family:var(--font-m);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid currentColor;border-radius:99px;padding:.55em 1.2em;
+  transition:background .35s var(--ease), color .35s var(--ease);
+}
+.pill:hover{background:var(--terracota);border-color:var(--terracota);color:#fff}
+
+/* ── Hero ── */
+.hero{position:relative;min-height:100svh;display:flex;align-items:center}
+.hero-media{position:absolute;inset:0;overflow:hidden}
+.hero-media video{width:100%;height:100%;object-fit:cover}
+.hero-scrim{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(90deg, rgba(20,16,13,.82) 0%, rgba(20,16,13,.45) 45%, rgba(20,16,13,.08) 75%),
+    linear-gradient(0deg, rgba(20,16,13,.55) 0%, transparent 30%);
+}
+.hero-copy{position:relative;z-index:2;padding:0 clamp(1.2rem,6vw,6rem);max-width:44rem}
+.eyebrow{color:var(--terracota);margin-bottom:1.4rem}
+h1{
+  font-family:var(--font-d);font-weight:400;
+  font-size:clamp(4.2rem,13vw,9.5rem);line-height:.95;letter-spacing:-.01em;
+}
+.hero-sub{margin-top:1.6rem;font-size:clamp(1.02rem,1.6vw,1.25rem);font-weight:300;max-width:30rem;opacity:.92;line-height:1.6}
+.hero-ctas{margin-top:2.4rem;display:flex;align-items:center;gap:1.6rem;flex-wrap:wrap}
+.btn{
+  display:inline-block;background:var(--terracota);color:#fff;
+  font-weight:500;font-size:.95rem;border-radius:99px;
+  padding:1em 2.1em;
+  box-shadow:0 14px 40px rgba(196,85,59,.35);
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+  will-change:transform;
+}
+.btn:hover{box-shadow:0 20px 50px rgba(196,85,59,.5)}
+.ghost{font-size:.9rem;opacity:.8;border-bottom:1px solid var(--line-l);padding-bottom:.2em;transition:opacity .3s}
+.ghost:hover{opacity:1}
+.hero-corner{
+  position:absolute;right:clamp(1.2rem,4vw,3rem);bottom:1.6rem;z-index:2;
+  opacity:.55;writing-mode:vertical-rl;
+}
+
+/* ── Marquee ── */
+.strip{overflow:hidden;padding:1.1rem 0;border-top:1px solid var(--line-l);border-bottom:1px solid var(--line-l)}
+.strip-track{display:flex;white-space:nowrap;width:max-content;animation:slide calc(26s/var(--fx)) linear infinite}
+.strip-track span{
+  font-family:var(--font-d);font-style:italic;font-size:1.15rem;letter-spacing:.06em;
+  opacity:.65;padding-right:.5em;
+}
+@keyframes slide{to{transform:translateX(-33.333%)}}
+
+/* ── Secciones base ── */
+section{padding:clamp(5rem,12vh,9rem) clamp(1.2rem,6vw,6rem)}
+h2.big{
+  font-family:var(--font-d);font-weight:400;
+  font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.04;letter-spacing:-.01em;
+  margin-bottom:1.6rem;
+}
+.lines span{display:block}
+
+/* ── Promesa (oscura, sobre el cielo) ── */
+.promesa{max-width:62rem}
+.promesa-body{font-size:clamp(1rem,1.5vw,1.2rem);font-weight:300;line-height:1.7;max-width:36rem;opacity:.9}
+.stats{list-style:none;display:flex;gap:clamp(1.5rem,5vw,4rem);margin-top:3.2rem;flex-wrap:wrap}
+.stats strong{display:block;font-size:clamp(2.2rem,4.5vw,3.4rem);font-weight:400;color:var(--terracota);letter-spacing:0}
+.stats span{font-size:.85rem;opacity:.75;max-width:9rem;display:block;margin-top:.4rem;line-height:1.4}
+
+/* ── Disciplinas (zona de transición: hereda --ink fluida) ── */
+.disciplinas{--ink-now: var(--ink-light)}
+.disciplinas .ink-fluid{color:var(--ink-now);transition:color .2s linear}
+.disc-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:clamp(1rem,2.2vw,1.8rem);margin-top:3rem;
+}
+.card{
+  background:var(--crema);color:var(--ink-dark);
+  border-radius:14px;overflow:hidden;
+  box-shadow:0 24px 60px rgba(20,16,13,.28);
+  transform-style:preserve-3d;will-change:transform;
+  transition:box-shadow .45s var(--ease);
+}
+.card:hover{box-shadow:0 34px 80px rgba(20,16,13,.38)}
+.card figure{aspect-ratio:4/5;overflow:hidden;background:var(--arena)}
+.card img{width:100%;height:100%;object-fit:cover;transform:scale(1.001);transition:transform .6s var(--ease)}
+.card:hover img{transform:scale(1.06)}
+.card h3{font-family:var(--font-d);font-size:1.45rem;font-weight:400;padding:1.1rem 1.2rem .3rem}
+.card p{padding:0 1.2rem 1.3rem;font-size:.9rem;font-weight:300;line-height:1.5;opacity:.8}
+
+/* ── Zona de día (papel) ── */
+.paper{background:var(--crema);color:var(--ink-dark)}
+.paper .eyebrow{color:var(--terracota)}
+
+/* ── Ritual (sticky) ── */
+.ritual-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem);max-width:72rem;margin:0 auto}
+.ritual-visual{position:relative}
+.ritual-frames{
+  position:sticky;top:14vh;aspect-ratio:4/5;border-radius:16px;overflow:hidden;
+  background:var(--arena);box-shadow:0 30px 70px rgba(34,28,23,.18);
+}
+.rframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .7s var(--ease)}
+.rframe.on{opacity:1}
+.ritual-steps{display:flex;flex-direction:column;gap:34vh;padding:8vh 0 16vh}
+.step-n{color:var(--terracota);display:block;margin-bottom:.6rem}
+.step h3{font-family:var(--font-d);font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:400;margin-bottom:.8rem}
+.step p{font-weight:300;line-height:1.7;max-width:26rem;opacity:.85}
+.step{opacity:.35;transition:opacity .5s var(--ease)}
+.step.on{opacity:1}
+
+/* ── Coaches ── */
+.coach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.6rem;margin-top:2.6rem;max-width:56rem}
+.coach-ph{
+  aspect-ratio:1;border-radius:14px;background:linear-gradient(160deg,var(--arena),#CBB89F);
+  display:flex;align-items:center;justify-content:center;
+  font-size:3rem;color:rgba(34,28,23,.35);
+}
+.coach h3{font-family:var(--font-d);font-weight:400;font-size:1.3rem;margin-top:.9rem}
+.coach p{opacity:.6;margin-top:.3rem}
+
+/* ── Horarios + planes ── */
+.hor-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2.5rem,7vw,6rem);max-width:72rem;margin:0 auto}
+.htable{width:100%;border-collapse:collapse;margin-top:2rem;font-size:.8rem}
+.htable td{padding:1rem 0;border-bottom:1px solid var(--line-d)}
+.htable td:last-child{text-align:right;opacity:.7}
+.planes{display:flex;flex-direction:column;gap:1rem}
+.plan{
+  border:1px solid var(--line-d);border-radius:14px;padding:1.4rem 1.6rem;position:relative;
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.plan:hover{transform:translateY(-3px);box-shadow:0 18px 44px rgba(34,28,23,.12)}
+.plan h3{font-family:var(--font-d);font-weight:400;font-size:1.35rem}
+.plan p{font-weight:300;font-size:.92rem;opacity:.8;margin-top:.4rem;line-height:1.5}
+.plan.destacado{border-color:var(--terracota);background:linear-gradient(160deg,rgba(196,85,59,.07),transparent)}
+.tag{position:absolute;top:-0.7em;right:1.2rem;background:var(--terracota);color:#fff;border-radius:99px;padding:.35em .9em;font-size:.6rem}
+.plan-note{font-size:.85rem;opacity:.6;font-style:italic}
+
+/* ── Comunidad ── */
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.6rem;margin-top:2.4rem;max-width:72rem}
+blockquote{
+  font-family:var(--font-d);font-size:1.15rem;line-height:1.55;
+  border-left:2px solid var(--terracota);padding-left:1.3rem;
+}
+blockquote cite{display:block;margin-top:1rem;font-style:normal;opacity:.55}
+
+/* ── Cierre ── */
+.cierre{background:var(--espresso);color:var(--ink-light);text-align:center;padding-bottom:7rem}
+.cierre h2{margin:0 auto 2.2rem}
+.big-btn{font-size:1.05rem;padding:1.2em 2.6em}
+.faq{max-width:38rem;margin:4rem auto 0;text-align:left}
+.faq details{border-bottom:1px solid var(--line-l);padding:1.1rem 0}
+.faq summary{cursor:pointer;font-weight:500;list-style:none;position:relative;padding-right:2rem}
+.faq summary::after{content:"+";position:absolute;right:.2rem;top:0;color:var(--terracota);font-size:1.2rem;transition:transform .3s var(--ease)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq p{margin-top:.7rem;font-weight:300;opacity:.8;line-height:1.6}
+
+/* ── Footer ── */
+.footer{background:#16120F;color:var(--ink-light);padding:3.5rem clamp(1.2rem,6vw,6rem) 2rem}
+.foot-grid{display:flex;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+.foot-mini{opacity:.5;margin-top:.5rem}
+.foot-links{display:flex;flex-direction:column;gap:.6rem;opacity:.7;text-align:right}
+.foot-links a:hover{color:var(--terracota)}
+.foot-legal{opacity:.35;margin-top:2.5rem;font-size:.62rem}
+
+/* ── FAB ── */
+.fab{
+  position:fixed;right:1.4rem;bottom:1.4rem;z-index:60;
+  width:56px;height:56px;border-radius:50%;
+  background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 14px 34px rgba(0,0,0,.3);will-change:transform;
+}
+
+/* ── Reveals ── */
+.rev{opacity:0;transform:translateY(30px);transition:opacity calc(.9s/var(--fx)) var(--ease), transform calc(.9s/var(--fx)) var(--ease)}
+.rev.in{opacity:1;transform:none}
+.rev.d1{transition-delay:.08s}.rev.d2{transition-delay:.16s}.rev.d3{transition-delay:.24s}
+
+/* Text reveal por línea */
+.lines span{display:block;overflow:hidden}
+.lines span{transform:translateY(0)}
+.lines.pre span{clip-path:inset(0 0 110% 0)}
+.lines.play span{
+  clip-path:inset(-10% 0 -10% 0);
+  transition:clip-path calc(1s/var(--fx)) var(--ease);
+}
+.lines.play span:nth-child(2){transition-delay:.12s}
+.lines.play span:nth-child(3){transition-delay:.24s}
+
+/* ── Responsive ── */
+@media(max-width:900px){
+  .ritual-grid,.hor-grid{grid-template-columns:1fr}
+  .ritual-frames{position:relative;top:0;aspect-ratio:3/2}
+  .ritual-steps{gap:3.5rem;padding:2.5rem 0 0}
+  .step{opacity:1}
+  .nav-links{display:none}
+  .hero-corner{display:none}
+  .foot-links{text-align:left}
+}
+
+/* ── Reduced motion / fallbacks ── */
+@media(prefers-reduced-motion:reduce){
+  .strip-track{animation:none}
+  .rev{opacity:1;transform:none;transition:none}
+  .lines.pre span,.lines.play span{clip-path:none;transition:none}
+  .rframe{transition:none}
+  html{scroll-behavior:auto}
+}
+/* Sin JS: todo visible y tema día en secciones de papel */
+.no-js .rev{opacity:1;transform:none}
