@@ -229,6 +229,44 @@ blockquote cite{display:block;margin-top:1rem;font-style:normal;opacity:.55}
   box-shadow:0 14px 34px rgba(0,0,0,.3);will-change:transform;
 }
 
+/* ── Capa inmersiva ── */
+#spotlight{position:fixed;inset:0;z-index:1;pointer-events:none;mix-blend-mode:screen}
+#dust{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;mix-blend-mode:screen}
+.hero-copy{z-index:2}
+
+.fierro-grid{
+  display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(2rem,6vw,5rem);
+  max-width:72rem;margin:0 auto;align-items:center;
+}
+.fierro-sub{font-weight:300;line-height:1.7;max-width:26rem;opacity:.85}
+.kb-hint{color:var(--terracota);margin-top:1.6rem;opacity:.8}
+.kb-stage{position:relative;min-height:clamp(340px,52vh,540px)}
+#kb3d{position:absolute;inset:0;cursor:grab;touch-action:pan-y}
+#kb3d:active{cursor:grabbing}
+#kb3d canvas{width:100%!important;height:100%!important;display:block}
+#kb3d.kb-fallback{
+  background:radial-gradient(60% 50% at 50% 60%, var(--arena), transparent 75%);
+}
+.kb-spot{
+  position:absolute;top:0;left:0;color:var(--ink-dark);opacity:0;
+  padding:.4em .8em;background:rgba(246,241,234,.9);border:1px solid var(--line-d);
+  border-radius:99px;white-space:nowrap;pointer-events:none;
+  margin-left:.8rem;margin-top:-.6rem;
+  transition:opacity .4s var(--ease);
+}
+.kb-spot::before{
+  content:"";position:absolute;left:-.55rem;top:50%;width:.5rem;height:1px;
+  background:var(--ink-dark);opacity:.5;
+}
+@media(max-width:900px){
+  .fierro-grid{grid-template-columns:1fr}
+  .kb-stage{min-height:320px}
+  .kb-hint{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  #dust,#spotlight{display:none}
+}
+
 /* ── Reveals ── */
 .rev{opacity:0;transform:translateY(30px);transition:opacity calc(.9s/var(--fx)) var(--ease), transform calc(.9s/var(--fx)) var(--ease)}
 .rev.in{opacity:1;transform:none}

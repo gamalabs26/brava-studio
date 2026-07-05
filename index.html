@@ -21,6 +21,9 @@
 <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,400i,700&f[]=switzer@300,400,500,600&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -36,6 +39,8 @@
 
 <!-- Cielo del amanecer: capa fija que pasa de espresso a crema con el scroll -->
 <div id="dawn" aria-hidden="true"></div>
+<!-- Luz cálida que sigue al cursor (nivel 2, solo desktop) -->
+<div id="spotlight" aria-hidden="true"></div>
 
 <header class="nav" id="nav">
   <a class="wordmark" href="#top">BRAVA<span class="wordmark-dot">.</span></a>
@@ -58,6 +63,7 @@
         <source src="assets/hero-pingpong.mp4" type="video/mp4">
       </video>
       <div class="hero-scrim" aria-hidden="true"></div>
+      <canvas id="dust" aria-hidden="true"></canvas>
     </div>
     <div class="hero-copy">
       <p class="eyebrow mono rev">Juriquilla · Qro — 6:00 a 21:00</p>
@@ -116,6 +122,24 @@
         <figure><img src="assets/img/disc-movilidad.webp" alt="Sesión de movilidad y estiramiento en BRAVA Studio" loading="lazy" data-gs-img="disciplina_movilidad"></figure>
         <h3>Movilidad</h3><p>Muévete sin estrenar dolores. La clase que tu espalda agradece.</p>
       </article>
+    </div>
+  </section>
+
+  <!-- ══ EL FIERRO (nivel 3: espacio navegable) ══ -->
+  <section class="fierro paper" id="fierro">
+    <div class="fierro-grid">
+      <div class="fierro-copy">
+        <p class="eyebrow mono rev">La herramienta</p>
+        <h2 class="lines big"><span>Conócela antes</span><span>de <span class="it">cargarla.</span></span></h2>
+        <p class="fierro-sub rev d1">Hierro fundido de 16 kg. La kettlebell de tu
+        primer swing — y de los mil que siguen.</p>
+        <p class="mono kb-hint rev d2" aria-hidden="true">Arrastra para girarla ↻</p>
+      </div>
+      <div class="kb-stage rev d1">
+        <div id="kb3d" role="img" aria-label="Kettlebell de hierro fundido en 3D, se puede girar arrastrando"></div>
+        <span class="kb-spot mono" data-spot="asa">AGARRE 35 MM</span>
+        <span class="kb-spot mono" data-spot="cuerpo">HIERRO FUNDIDO · 16 KG</span>
+      </div>
     </div>
   </section>
 
@@ -232,6 +256,7 @@
 </a>
 
 <script src="assets/js/main.js" defer></script>
+<script type="module" src="assets/js/immersive.js"></script>
 <!-- GamaStudio Site Kit — tenant pendiente de crear (warning esperado) -->
 <script src="https://app-production-1c17.up.railway.app/embed/gamastudio.js" data-tenant="brava" defer></script>
 </body>
